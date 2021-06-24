@@ -1,5 +1,4 @@
 import pytest
-
 from homework1.task2.check_fib.check_fib import check_fibonacci
 
 
@@ -24,5 +23,6 @@ def test_length_negative():
 
 
 def test_empty_sequence():
-    """Testing that fibonacci checking False, when sequence contain 0 integers inside"""
+    """Testing that fibonacci checking False
+    when sequence has 0 integers inside"""
     assert not check_fibonacci(())

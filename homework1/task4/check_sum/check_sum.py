@@ -1,18 +1,15 @@
 from typing import List
+from collections import Counter
 
 
 def check_sum_of_four(a: List[int],
                       b: List[int],
                       c: List[int],
-                      d: List[int]
-                      ) -> int:
-    dictionary_of_sums = {}
+                      d: List[int]) -> int:
+    dictionary_of_sums = Counter()
     for element_a in a:
         for element_b in b:
-            if element_a + element_b not in dictionary_of_sums:
-                dictionary_of_sums[element_a + element_b] = 1
-            else:
-                dictionary_of_sums[element_a + element_b] += 1
+            dictionary_of_sums[element_a + element_b] += 1
     counter = 0
     for element_c in c:
         for element_d in d:

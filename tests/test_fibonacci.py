@@ -14,15 +14,16 @@ def test_negative_case():
 
 def test_length_positive():
     """Testing that fibonacci checking True, even when length <= 2"""
-    assert check_fibonacci((55, ))
+    assert check_fibonacci((55,))
 
 
 def test_length_negative():
     """Testing that fibonacci checking False, even when length <= 2"""
-    assert not check_fibonacci((54, ))
+    assert not check_fibonacci((54,))
 
 
 def test_empty_sequence():
     """Testing that fibonacci checking False
-    when sequence has 0 integers inside"""
+    when sequence has 0 integers inside
+    """
     assert not check_fibonacci(())

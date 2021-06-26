@@ -1,5 +1,5 @@
 import pytest
-from homework1.task4.check_sum.check_sum import check_sum_of_four
+from homework1.task4.check_sum import check_sum_of_four
 
 
 def test_correct_work_1000():

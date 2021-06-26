@@ -1,5 +1,5 @@
 import pytest
-from homework1.task2.check_fib.check_fib import check_fibonacci
+from homework1.task2.check_fib import check_fibonacci
 
 
 def test_positive_case():

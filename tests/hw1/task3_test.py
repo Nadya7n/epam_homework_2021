@@ -1,5 +1,5 @@
 import pytest
-from homework1.task3.min_max.min_max import find_maximum_and_minimum
+from homework1.task3.min_max import find_maximum_and_minimum
 
 
 def test_correcting_work():

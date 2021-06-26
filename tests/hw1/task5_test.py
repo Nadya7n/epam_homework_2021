@@ -1,5 +1,5 @@
 import pytest
-from homework1.task5.maximum_subarray.maximum_subarray import find_maximal_sub_array_sum
+from homework1.task5.maximum_subarray import find_maximal_sub_array_sum
 
 
 def test_correct_k_maximum():

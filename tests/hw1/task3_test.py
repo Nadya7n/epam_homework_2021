@@ -5,11 +5,11 @@ from homework1.task3.min_max import find_maximum_and_minimum
 
 def test_correcting_work():
     """Testing that finding maximum and minimum is correct"""
-    assert find_maximum_and_minimum("test3_file1.txt")
+    assert find_maximum_and_minimum("task3_file1.txt")
 
 
 def test_correcting_work_1_line():
     """Testing that finding maximum and minimum
     is correct when number of line = 1
     """
-    assert find_maximum_and_minimum("test3_file2.txt")
+    assert find_maximum_and_minimum("task3_file2.txt")

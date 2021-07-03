@@ -1,4 +1,5 @@
 import pytest
+
 from homework2.task1 import for_text
 
 file_path = "task1_file1.txt"

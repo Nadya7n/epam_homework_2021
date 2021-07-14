@@ -12,9 +12,7 @@ def test_good_working_of_cache_func():
     Testing that cache function works good
     """
     cache_func = cache(func)
-
-    some = 9, 34
-
+    some = 2, 3
     val_1 = cache_func(*some)
     val_2 = cache_func(*some)
 

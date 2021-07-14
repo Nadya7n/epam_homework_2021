@@ -3,17 +3,15 @@ import pytest
 from homework1.task4.check_sum import check_sum_of_four
 
 
-def test_checking_sum_of_four_lists_with_1000_el():
+def test_checking_sum_of_four_lists_with_3_el():
     """Testing that checking sum of four lists
-    is correct when len of lists equals 1000
+    is correct when len of lists equals 3
     """
-    a, b, c, d = [], [], [], []
-    for i in range(1000):
-        a.append(-1)
-        b.append(1)
-        c.append(0)
-        d.append(0)
-    assert check_sum_of_four(a, b, c, d)
+    a = [1, 2, 3]
+    b = [57, -1, 53]
+    c = [200, 500, 0]
+    d = [900, 0, 1000]
+    assert check_sum_of_four(a, b, c, d) == 1
 
 
 def test_checking_sum_of_four_lists_with_0_el():

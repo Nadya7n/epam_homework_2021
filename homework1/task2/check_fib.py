@@ -1,24 +1,37 @@
-from math import sqrt
+"""
+'''
+Given a cell with "it's a fib sequence" from slideshow,
+    please write function "check_fib", which accepts a Sequence of integers, and
+    returns if the given sequence is a Fibonacci sequence
+
+We guarantee, that the given sequence contain >= 0 integers inside.
+'''
+
 from typing import Sequence
 
 
-def is_fibonacci(element) -> bool:
-    element_1 = 5 * element ** 2 - 4
-    element_2 = 5 * element ** 2 + 4
-    if element == 0:
-        return True
-    else:
-        if sqrt(element_1).is_integer() or sqrt(element_2).is_integer():
-            return True
-        else:
-            return False
+def check_fibonacci(data: Sequence[int]) -> bool:
+    ...
+"""
+from typing import Sequence
+
+
+def fibonacci(start):
+    first, second = 0, 1
+    while True:
+        if first >= start:
+            yield first
+        first, second = second, first + second
 
 
 def check_fibonacci(data: Sequence[int]) -> bool:
-    answer = True
     if not data:
-        answer = False
+        return False
     else:
-        for element in data:
-            answer &= is_fibonacci(int(element))
-    return answer
+        if all([isinstance(i, int) for i in data]):
+            for values_from_data, from_fibonacci in zip(data, fibonacci(data[0])):
+                if values_from_data != from_fibonacci:
+                    return False
+            return True
+        else:
+            return False

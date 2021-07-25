@@ -1,4 +1,5 @@
 import pytest
+
 from homework6.counter import instances_counter
 
 

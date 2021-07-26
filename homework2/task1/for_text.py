@@ -29,18 +29,22 @@ def get_most_common_non_ascii_char(file_path: str) -> str:
     ...
 """
 import unicodedata
+from operator import itemgetter
 from typing import List
 
 
 def get_longest_diverse_words(file_path: str, encoding="utf8") -> List[str]:
-    set_of_unique = set()
+    dict_of_unique = {}
     file_input = open(file_path, encoding=encoding)
     for line in file_input:
         line = line.encode().decode("unicode-escape")
         for el in line.split():
-            if el not in set_of_unique:
-                set_of_unique.add((len(set(el)) + len(el), el))
-    return [i[1] for i in sorted(set_of_unique)[:-11:-1]]
+            if el not in dict_of_unique.keys():
+                dict_of_unique[el] = len(set(el)) + len(el)
+
+    list_of_unique = [(k, dict_of_unique[k]) for k in dict_of_unique]
+    maximum_value = sorted(list_of_unique, key=itemgetter(1), reverse=True)
+    return [key for key in dict(maximum_value[:10]).keys()]
 
 
 def get_rarest_char(file_path: str, encoding="utf8") -> str:
@@ -54,19 +58,19 @@ def get_rarest_char(file_path: str, encoding="utf8") -> str:
                     dict_of_unique_symbol[el_2] = 1
                 else:
                     dict_of_unique_symbol[el_2] += 1
-    return [key for key, value in dict_of_unique_symbol.items() if value == 1][0]
+    return min(dict_of_unique_symbol, key=dict_of_unique_symbol.get)
 
 
 def count_punctuation_chars(file_path: str, encoding="utf8") -> int:
-    dict_of_punctuation_chars = {"punctuation": 0}
+    counter_punctuation_chars = 0
     file_input = open(file_path, encoding=encoding)
     for line in file_input:
         line = line.encode().decode("unicode-escape")
         for el in line.split():
             for el_2 in el:
                 if unicodedata.category(el_2).startswith("P"):
-                    dict_of_punctuation_chars["punctuation"] += 1
-    return sum(dict_of_punctuation_chars.values())
+                    counter_punctuation_chars += 1
+    return counter_punctuation_chars
 
 
 def count_non_ascii_chars(file_path: str, encoding="utf8") -> int:

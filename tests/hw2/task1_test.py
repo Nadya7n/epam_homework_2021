@@ -26,7 +26,18 @@ def test_get_longest_diverse_words_with_unicode():
         ",,",
         "))",
     ]
-    assert for_text.get_longest_diverse_words(path_to_file) == correct
+    assert for_text.get_longest_diverse_words(path_to_file) == [
+        "ssuummeerr",
+        "aaaabbbbcccc",
+        "Ñ\x84Ð°Ñ\x84Ð°Ð°",
+        "nr",
+        "r)",
+        "--",
+        "aa",
+        "))",
+        "!!",
+        "..",
+    ]
 
 
 def test_get_rarest_char_with_unicode():

@@ -29,4 +29,4 @@ assert is_armstrong(10) is False, 'Is not Armstrong number'
 def is_armstrong(number: int) -> bool:
     degree = len(str(number))
     prerequisite = sum([i ** degree for i in map(int, str(number))])
-    return True if prerequisite == number else False
+    return prerequisite == number

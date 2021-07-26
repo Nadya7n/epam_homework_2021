@@ -39,10 +39,9 @@ def worker(n, return_l):
 if __name__ == "__main__":
     manager = Manager()
     return_dict = manager.dict()
-    numbers = [i for i in range(500)]
     process_work = []
 
-    for index, number in enumerate(numbers):
+    for number in range(500):
         proc = Process(target=worker, args=(number, return_dict))
         process_work.append(proc)
         proc.start()

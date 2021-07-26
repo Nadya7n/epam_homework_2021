@@ -60,11 +60,11 @@ class Filter:
     functions that return True if object in list conforms to some criteria
     """
 
-    def __init__(self, functions):
-        self.functions = functions
+    def __init__(self, *args):
+        self.function = args
 
     def apply(self, data):
-        return [item for item in data if all(i(item) for i in self.functions)]
+        return [item for item in data if all(i(item) for i in self.function)]
 
 
 def make_filter(**keywords):
@@ -74,11 +74,11 @@ def make_filter(**keywords):
     filter_funcs = []
     for key, value in keywords.items():
 
-        def keyword_filter_func(item, key=key, value=value):
+        def keyword_filter_func(item):
             return item.get(key) == value
 
         filter_funcs.append(keyword_filter_func)
-    return Filter(filter_funcs)
+    return Filter(*filter_funcs)
 
 
 sample_data = [

@@ -1,2 +1,5 @@
+black 
+isort
 pytest
 pytest-sugar
+requests_mock

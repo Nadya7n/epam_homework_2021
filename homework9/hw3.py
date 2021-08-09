@@ -32,8 +32,9 @@ def universal_file_counter(
 ) -> int:
     counter = 0
     for file in os.listdir(dir_path):
+        file_path = os.path.join(dir_path, file)
         if file.endswith(file_extension):
-            with open(file) as fh:
+            with open(file_path) as fh:
                 for line in fh:
                     counter += tokenizer_processing(line, tokenizer)
     return counter

@@ -1,7 +1,6 @@
 import tempfile
 
 import pytest
-
 from homework9.hw1 import merge_sorted_files
 
 

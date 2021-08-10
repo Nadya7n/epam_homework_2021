@@ -27,7 +27,7 @@ def tmp_files(file_list, values) -> str:
     ],
 )
 def test_merging_sorted_2_files(tmp_files, file_list, values):
-    assert merge_sorted_files(tmp_files) == [1, 2, 3, 4, 5, 6]
+    assert list(merge_sorted_files(tmp_files)) == [1, 2, 3, 4, 5, 6]
 
 
 @pytest.mark.parametrize(
@@ -40,7 +40,7 @@ def test_merging_sorted_2_files(tmp_files, file_list, values):
     ],
 )
 def test_merging_sorted_3_files(tmp_files, file_list, values):
-    assert merge_sorted_files(tmp_files) == [1, 2, 4, 6, 10, 40]
+    assert list(merge_sorted_files(tmp_files)) == [1, 2, 4, 6, 10, 40]
 
 
 @pytest.mark.parametrize(
@@ -53,4 +53,4 @@ def test_merging_sorted_3_files(tmp_files, file_list, values):
     ],
 )
 def test_merging_sorted_with_one_empty_file(tmp_files, file_list, values):
-    assert merge_sorted_files(tmp_files) == [4, 10]
+    assert list(merge_sorted_files(tmp_files)) == [4, 10]

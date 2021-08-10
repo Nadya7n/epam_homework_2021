@@ -26,4 +26,5 @@ def read_files(list_with_files: str) -> Iterator:
 
 
 def merge_sorted_files(file_list: List[Union[Path, str]]) -> Iterator:
-    return sorted(list(read_files(file_list)))
+    for item in sorted(list(read_files(file_list))):
+        yield item

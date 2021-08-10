@@ -57,12 +57,12 @@ class Homework:
     def __init__(self, text, deadline, created=datetime.datetime.now()):
         self.text = text
         self.deadline = datetime.timedelta(deadline)
-        self.created = datetime.datetime.now()
+        self.created = created
 
     def is_active(self):
         time_now = datetime.datetime.now()
         time_deadline = self.created + self.deadline
-        return False if time_now >= time_deadline else True
+        return time_now < time_deadline
 
 
 class Student:
@@ -81,11 +81,11 @@ class Student:
         self.last_name = last_name
         self.first_name = first_name
 
-    @classmethod
-    def do_homework(cls, instance):
-        method_is_active = Homework.is_active(instance)
+    @staticmethod
+    def do_homework(instance):
+        method_is_active = instance.is_active()
         if method_is_active is True:
-            return method_is_active
+            return instance
         else:
             print("You are late")
 

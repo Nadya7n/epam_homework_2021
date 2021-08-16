@@ -33,7 +33,7 @@ text_3 = "<table class='table table__layout--fixed'><tr><tr><td><a href='/stocks
 
 
 def testing_parsing_main_page():
-    with requests_mock.Mocker() as m_2:
+    with requests_mock.Mocker(real_http=True) as m_2:
         m_2.register_uri("GET", url_1, text=text_1)
         with requests_mock.Mocker(real_http=True) as m:
             m.register_uri("GET", url_3, text=text_3)
@@ -48,7 +48,7 @@ text_4 = "<title>YUM Stock | YUM!</title><span class='price-section__label'>YUM!
 
 
 def testing_parsing_individual_page():
-    with requests_mock.Mocker() as m_2:
+    with requests_mock.Mocker(real_http=True) as m_2:
         m_2.register_uri("GET", url_1, text=text_1)
         with requests_mock.Mocker(real_http=True) as m:
             m.register_uri("GET", url_3, text=text_3)

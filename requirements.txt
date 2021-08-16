@@ -6,4 +6,4 @@ requests_mock
 requests
 retry
 bs4
-
+lxml

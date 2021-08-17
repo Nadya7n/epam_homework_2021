@@ -1,5 +1,6 @@
-import pytest
 from unittest import TestCase
+
+import pytest
 
 from homework6 import oop_2
 

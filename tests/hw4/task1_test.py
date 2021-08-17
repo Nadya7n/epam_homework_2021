@@ -1,3 +1,4 @@
+import os
 import tempfile
 
 import pytest
@@ -17,17 +18,19 @@ def test_file(param) -> str:
 @pytest.mark.parametrize("param", ["1", "2"])
 def test_reading_magic_number_positive_case(test_file, param):
     assert read_magic_number(test_file) is True
+    os.remove("/tmp/test.txt")
 
 
 @pytest.mark.parametrize("param", ["12", "are", ""])
 def test_reading_magic_number_negative_case(test_file, param):
     assert read_magic_number(test_file) is False
+    os.remove("/tmp/test.txt")
 
 
 def test_reading_magic_number_file_error():
     try:
         read_magic_number("test.txt")
-    except FileNotFoundError:
+    except ValueError:
         assert True
     else:
         assert False

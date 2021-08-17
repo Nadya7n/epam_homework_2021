@@ -30,13 +30,8 @@ import os
 
 
 def value_error(some_value):
-    try:
-        isinstance(int(some_value), int)
-    except ValueError:
-        raise ValueError
-    if 1 <= int(some_value) < 3:
-        pass
-    else:
+    isinstance(int(some_value), int)
+    if not 1 <= int(some_value) < 3:
         raise ValueError
 
 
@@ -45,7 +40,7 @@ def read_magic_number(path: str) -> bool:
         with open(path) as fh:
             first_line = fh.readline()
     else:
-        raise FileNotFoundError
+        raise ValueError("File not found")
     answer = True
     try:
         value_error(first_line)

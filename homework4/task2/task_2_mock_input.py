@@ -26,27 +26,18 @@ You will learn:
 
 * https://docs.python.org/3/library/urllib.request.html#urllib.request.urlopen
 """
-import urllib.request
+import requests
 
 
-def check_site(site_name):
+def take_text_from_page(url: str):
     try:
-        link = urllib.request.urlopen(site_name)
-    except:
-        raise ValueError
+        response = requests.get(url)
+    except requests.exceptions.RequestException:
+        raise ValueError(f"Unreachable {url}")
     else:
-        return link
+        return response.text
 
 
 def count_dots_on_i(url: str) -> int:
-    counter = 0
-    try:
-        link = check_site(url)
-    except ValueError:
-        raise ValueError
-    else:
-        for line in link.readlines():
-            for char in line.decode("utf-8"):
-                if char == "i":
-                    counter += 1
-        return counter
+    data_from_page = take_text_from_page(url)
+    return data_from_page.count("i")

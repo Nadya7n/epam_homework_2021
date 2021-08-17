@@ -46,5 +46,6 @@ class Order:
 def morning_discount(order):
     return order.price * 0.5
 
+
 def elder_discount(order):
     return order.price * 0.9

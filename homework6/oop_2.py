@@ -81,22 +81,8 @@ class Homework:
         return False if time_now >= time_deadline else True
 
 
-# пока почему-то не работает
 class DeadlineError(Exception):
-    """
-    Initiate Exception class
-    """
-
-    def __init__(self, method_is_active):
-        self.is_active = method_is_active
-
-    def __str__(self):
-        try:
-            assert self.is_active is True
-        except AssertionError:
-            raise DeadlineError
-        else:
-            pass
+    ...
 
 
 class Student(Person):
@@ -107,13 +93,9 @@ class Student(Person):
     """
 
     def do_homework(self, hw, solution):
-        method_is_active = Homework.is_active(hw)
-        try:
-            method_is_active
-        except DeadlineError:
-            print("You are late")
-        else:
+        if hw.is_active():
             return HomeworkResult(self, hw, solution)
+        raise DeadlineError("You are late")
 
 
 class Teacher(Person):
@@ -125,23 +107,18 @@ class Teacher(Person):
     homework_done = defaultdict(set)
 
     def check_homework(self, homework_result):
-        try:
-            homework_result
-        except AttributeError:
-            print("AttributeError")
+        homework = homework_result.homework
+        homework_result = homework_result.solution
+        if len(homework_result) >= 5:
+            self.homework_done[homework].add(homework_result)
+            return True
         else:
-            homework = homework_result.homework
-            homework_result = homework_result.solution
-            if len(homework_result) >= 5:
-                self.homework_done[homework].add(homework_result)
-                return True
-            else:
-                return False
+            return False
 
     @classmethod
     def reset_results(cls, homework=0):
         if isinstance(homework, Homework):
-            del cls.homework_done[homework.text]
+            del cls.homework_done[homework]
         else:
             cls.homework_done.clear()
 

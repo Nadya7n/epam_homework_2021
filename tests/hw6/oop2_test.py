@@ -1,4 +1,5 @@
 import pytest
+from unittest import TestCase
 
 from homework6 import oop_2
 
@@ -20,11 +21,8 @@ def test_all_cases():
     result_3 = lazy_student.do_homework(docs_hw, "done")
     assert result_3.author.last_name == "Petrov"
 
-    try:
-        result_4 = oop_2.HomeworkResult(good_student, "fff", "Solution")
-    except Exception:
-        print("There was an exception here")
-        assert True
+    with TestCase.assertRaises(TestCase, expected_exception=AttributeError):
+        oop_2.HomeworkResult(good_student, "fff", "Solution")
 
     assert opp_teacher.check_homework(result_1) is True
     assert advanced_python_teacher.check_homework(result_1) is True
@@ -32,6 +30,11 @@ def test_all_cases():
     temp_1 = opp_teacher.homework_done
     temp_2 = oop_2.Teacher.homework_done
     assert temp_1 == temp_2
+
+    opp_teacher.check_homework(result_2)
+    assert len(opp_teacher.homework_done) == 2
+    opp_teacher.reset_results(docs_hw)
+    assert len(opp_teacher.homework_done) == 1
 
     assert oop_2.Teacher.homework_done[oop_hw] == {"I have done this hw"}
     assert oop_2.Teacher.reset_results() is None

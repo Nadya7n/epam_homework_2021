@@ -23,22 +23,12 @@ def test_class_homework(sample_for_test):
     Testing that attributes and method of Class Homework work correct
     """
     homework_1, homework_2, _, _ = sample_for_test
-    text_1, deadline_1, is_active_1 = (
-        homework_1.text,
-        homework_1.deadline,
-        homework_1.is_active(),
-    )
-    text_2, deadline_2, is_active_2 = (
-        homework_2.text,
-        homework_2.deadline,
-        homework_2.is_active(),
-    )
-    assert text_1 == "Maths"
-    assert deadline_1 == datetime.timedelta(days=5)
-    assert text_2 == "Statistics"
-    assert deadline_2 == datetime.timedelta(0)
-    assert is_active_1 is True
-    assert is_active_2 is False
+    assert homework_1.text == "Maths"
+    assert homework_1.deadline == datetime.timedelta(days=5)
+    assert homework_2.text == "Statistics"
+    assert homework_2.deadline == datetime.timedelta(0)
+    assert homework_1.is_active() is True
+    assert homework_2.is_active() is False
 
 
 def test_class_student(sample_for_test):
@@ -46,11 +36,10 @@ def test_class_student(sample_for_test):
     Testing that attributes and method of Class Student work correct
     """
     homework_1, homework_2, student, _ = sample_for_test
-    last_name = student.last_name
     do_hw_1 = student.do_homework(homework_1)
     do_hw_2 = student.do_homework(homework_2)
-    assert last_name == "Ivanov"
-    assert str(do_hw_1).startswith("<homework5.oop_1.Homework object at ")
+    assert student.last_name == "Ivanov"
+    assert isinstance(do_hw_1, oop_1.Homework)
     assert do_hw_2 is None
 
 
@@ -59,9 +48,8 @@ def test_class_teacher(sample_for_test):
     Testing that attributes and method of Class Teacher work correct
     """
     _, _, _, teacher = sample_for_test
-    first_name = teacher.first_name
     create_hw_1 = teacher.create_homework("Maths", 5).deadline
     create_hw_2 = teacher.create_homework("Statistics", 0).deadline
-    assert first_name == "Lev"
+    assert teacher.first_name == "Lev"
     assert create_hw_1 == datetime.timedelta(days=5)
     assert create_hw_2 == datetime.timedelta(0)

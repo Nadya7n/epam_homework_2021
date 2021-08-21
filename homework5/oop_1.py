@@ -54,10 +54,10 @@ class Homework:
         is_active - check deadline and return boolean
     """
 
-    def __init__(self, text, deadline, created=datetime.datetime.now()):
+    def __init__(self, text, deadline, created=None):
         self.text = text
         self.deadline = datetime.timedelta(deadline)
-        self.created = created
+        self.created = created or datetime.datetime.now()
 
     def is_active(self):
         time_now = datetime.datetime.now()

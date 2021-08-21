@@ -13,7 +13,8 @@ def temp_file() -> str:
     temp_file = f"{temp_dir}/task1_file1.txt"
     with open(temp_file, "w") as fw:
         fw.write(text)
-    return temp_file
+    yield temp_file
+    os.remove(temp_file)
 
 
 def test_get_longest_diverse_words_with_unicode(temp_file):

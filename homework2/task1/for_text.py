@@ -33,7 +33,7 @@ from operator import itemgetter
 from typing import Iterator, List
 
 
-def encoding_file(file_path: str, encoding="utf8") -> Iterator:
+def encoding_file(file_path: str, encoding="unicode-escape") -> Iterator:
     """
     Generator that return lines from encoding file
     :param file_path: path to file, str
@@ -42,7 +42,6 @@ def encoding_file(file_path: str, encoding="utf8") -> Iterator:
     """
     file_input = open(file_path, encoding=encoding)
     for line in file_input:
-        line = line.encode().decode("unicode-escape")
         yield line
 
 

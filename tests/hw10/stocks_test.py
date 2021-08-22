@@ -1,13 +1,15 @@
 import json
 import os
 import tempfile
+from datetime import datetime
 
 import pytest
 import requests_mock
 
 from homework10 import stocks_multi
 
-url_1 = "http://www.cbr.ru/scripts/XML_daily.asp?date_req=17/08/2021"
+date_now = datetime.today().strftime("%d/%m/%Y")
+url_1 = f"http://www.cbr.ru/scripts/XML_daily.asp?date_req={date_now}"
 text_1 = "<Valute ID='R01235'><Name>Доллар США<Value>73,4721"
 
 
@@ -62,13 +64,13 @@ def testing_parsing_individual_page():
 
 
 @pytest.fixture()
-def tmp_files() -> str:
-    temp_dir = tempfile.gettempdir()
-    temp_list = []
-    for i in range(1, 5):
-        temp_file = f"{temp_dir}/file{i}.json"
-        temp_list.append(temp_file)
-    return temp_list
+def tmp_files() -> list:
+    with tempfile.TemporaryDirectory() as temp_dir:
+        temp_list = []
+        for i in range(1, 5):
+            temp_file = f"{temp_dir}/file{i}.json"
+            temp_list.append(temp_file)
+        yield temp_list
 
 
 def test_into_json(tmp_files):
@@ -88,11 +90,7 @@ def test_into_json(tmp_files):
             )
             tmp_list.append(instance)
 
-        files = [i for i in tmp_files]
-        path_1 = files[0]
-        path_2 = files[1]
-        path_3 = files[2]
-        path_4 = files[3]
+        path_1, path_2, path_3, path_4 = tmp_files
 
         stocks_multi.into_json(
             tmp_storage=tmp_list, attr="price", reverse=True, path=path_1
@@ -107,10 +105,10 @@ def test_into_json(tmp_files):
             tmp_storage=tmp_list, attr="potential_profit", reverse=True, path=path_4
         )
 
-        for i, file in enumerate(files, start=1):
+        for i, file in enumerate(tmp_files, start=1):
             path_to_correct_data = os.path.join(os.path.dirname(__file__), "answer")
             with open(file) as fh:
-                result = fh.read()
+                result = json.load(fh)
                 with open(f"{path_to_correct_data}/{i}.json") as fh_1:
-                    answer = fh_1.read()
-                    assert result == answer
+                    answer = json.load(fh_1)
+                assert result == answer

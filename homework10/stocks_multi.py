@@ -60,14 +60,7 @@ def into_json(tmp_storage: list, attr: str, reverse: bool, path: str):
     with open(path, "w") as write_file:
         for item in top:
             tmp_list.append(
-                {
-                    "code": item.ticker,
-                    "name": item.name,
-                    "price": item.price,
-                    "P/E": item.p_e_ratio,
-                    "growth": item.growth,
-                    "potential profit": item.potential_profit,
-                },
+                {"code": item.ticker, "name": item.name, attr: getattr(item, attr)}
             )
         json.dump(tmp_list, write_file)
 
@@ -89,7 +82,7 @@ def parsing_main_page(page):
 
         ref = row.find("a").get("href")
 
-    yield Company(company_price_in_rub, company_growth, ref)
+        yield Company(company_price_in_rub, company_growth, ref)
 
 
 def parsing_individual_page_company(page):

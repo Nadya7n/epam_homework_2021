@@ -1,3 +1,4 @@
+import os
 import tempfile
 
 import pytest
@@ -12,17 +13,19 @@ def test_file_correct() -> str:
     temp_file = f"{temp_dir}/test.txt"
     with open(temp_file, "w") as f:
         f.write(text)
-    return temp_file
+    yield temp_file
+    os.remove(temp_file)
 
 
 @pytest.fixture
 def test_file_incorrect() -> str:
-    text = "name=kek\nlast_name=top\npower=9001\nsong=shadilay\n1=something"
+    text = "name=kek\nlast_name=top\npower=9001\nsong=shadilay\nsong=something"
     temp_dir = tempfile.gettempdir()
     temp_file = f"{temp_dir}/test.txt"
     with open(temp_file, "w") as f:
         f.write(text)
-    return temp_file
+    yield temp_file
+    os.remove(temp_file)
 
 
 @pytest.fixture

@@ -1,16 +1,13 @@
 class KeyValueStorage:
-    storage = {}
-
-    def __init__(self, path_to_file):
+    def __init__(self, path_to_file, storage=None):
         self.path_to_file = path_to_file
+        self.storage = storage or dict()
+
         with open(path_to_file) as fh:
             for line in fh:
-                line = line.strip().split("=")
-                key, value = line[0], line[1]
-                if key.isdigit():
-                    raise ValueError(
-                        f"Value - {key} - cannot be assigned to an attribute"
-                    )
+                key, value = line.strip().split("=")
+                if key in self.storage:
+                    raise ValueError(f"Value - {key} - already in storage")
                 else:
                     self.storage[key] = value
 

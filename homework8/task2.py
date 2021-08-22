@@ -1,9 +1,8 @@
 import sqlite3
+from collections import abc
 
 
-class TableData:
-    dct = {}
-
+class TableData(abc.Collection):
     def __init__(self, database_name, table_name):
         self.database_name = database_name
         self.table_name = table_name
@@ -25,12 +24,10 @@ class TableData:
         :param item: key name of row
         :return: single data row
         """
-        n_rows = self.__len__()
-        self.cursor.execute(f"SELECT * from {self.table_name}")
-        for i in range(n_rows):
-            data = self.cursor.fetchone()
-            self.dct[data[0]] = data
-        return self.dct[item]
+        self.cursor.execute(
+            f"SELECT * from {self.table_name} where name=:name", {"name": item}
+        )
+        return self.cursor.fetchone()
 
     def __contains__(self, item):
         """
@@ -38,14 +35,16 @@ class TableData:
         :param item: key name
         :return: bool
         """
-        return item in self.dct.keys()
+        self.cursor.execute(
+            f"SELECT count(*) from {self.table_name} where name=:name", {"name": item}
+        )
+        return self.cursor.fetchone()[0] >= 1
 
     def __iter__(self):
         """
         Give ability to be iterable
         :return: iterator
         """
-        n_rows = self.__len__()
         self.cursor.execute(f"SELECT * from {self.table_name}")
-        iterator = (self.cursor.fetchone() for el in range(n_rows))
-        return iterator
+        while row := self.cursor.fetchone():
+            yield row

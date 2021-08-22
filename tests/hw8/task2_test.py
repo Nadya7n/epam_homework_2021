@@ -29,7 +29,6 @@ def test_contains_item_in_table_data(creation_instance):
     Testing that check if row with key name exists in table works correct
     :param creation_instance: pytest fixture
     """
-    creation_instance["Yeltsin"]
     assert ("Yeltsin" in creation_instance) is True
 
 
@@ -46,12 +45,12 @@ def test_ability_to_iterate_in_loop(creation_instance):
     Testing that instance of class has an ability to be iterable
     :param creation_instance: pytest fixture
     """
-    counter = 0
+    counter = -1
     answer = [
         ("Yeltsin", 999, "Russia"),
         ("Trump", 1337, "US"),
         ("Big Man Tyrone", 101, "Kekistan"),
     ]
     for element in creation_instance:
-        assert element == answer[counter]
         counter += 1
+        assert element == answer[counter]

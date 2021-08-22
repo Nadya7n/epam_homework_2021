@@ -27,16 +27,23 @@ example_tree = {
 }
 
 
-# решение проблемы, когда в дереве есть и 1, и True
-def flags_for_bool_int(s_element):
+def cache(value):
     """
-    Assigns flags for searching element bool or int
-    :param s_element: element searched for in tree
-    :return: int_flag and bool_flag
+    Cache type of searching element
+    :param value: bool
+    :return: bool cache
     """
-    int_flag = True if type(s_element) == int else False
-    bool_flag = True if type(s_element) == bool else False
-    return int_flag, bool_flag
+    return value
+
+
+def types(item, flag):
+    """
+    Return type of item
+    :param item: any element
+    :param flag: checked type
+    :return: boolean
+    """
+    return type(item) == flag
 
 
 def check_flags(el, s_elem, counter):
@@ -48,11 +55,31 @@ def check_flags(el, s_elem, counter):
     :param counter: counter of found elements
     :return: counter
     """
-    int_flag, bool_flag = flags_for_bool_int(s_elem)
-    if (type(el) == int and int_flag) or (type(el) == bool and bool_flag):
+    int_s_el = cache(types(s_elem, int))
+    bool_s_el = cache(types(s_elem, bool))
+    if (types(el, int) and int_s_el) or (types(el, bool) and bool_s_el):
         counter += 1
-    elif not bool_flag and not int_flag:
+    if not (int_s_el) and not (bool_s_el):
         counter += 1
+    return counter
+
+
+def check_element(element, s_element, counter):
+    """
+    Template for searching for an element in a list
+    :param element: found in tree element
+    :param s_element: element searched for in tree
+    :param counter: counter of found elements
+    :return: counter
+    """
+    if element == s_element:
+        counter = check_flags(element, s_element, counter)
+
+    if isinstance(element, dict):
+        counter = dict_mode(element, s_element, counter)
+    elif isinstance(element, (list, tuple, set)):
+        counter = list_tuple_set_mode(element, s_element, counter)
+
     return counter
 
 
@@ -65,12 +92,7 @@ def list_tuple_set_mode(obj, s_element, counter):
     :return: counter
     """
     for el in obj:
-        if el == s_element:
-            counter = check_flags(el, s_element, counter)
-        if isinstance(el, list) or isinstance(el, tuple) or isinstance(el, set):
-            counter = list_tuple_set_mode(el, s_element, counter)
-        elif isinstance(el, dict):
-            counter = dict_mode(el, s_element, counter)
+        counter = check_element(el, s_element, counter)
     return counter
 
 
@@ -83,18 +105,8 @@ def dict_mode(obj, s_element, counter):
     :return: counter
     """
     for key, value in obj.items():
-        if key == s_element:
-            counter = check_flags(key, s_element, counter)
-        if value == s_element:
-            counter = check_flags(value, s_element, counter)
-        if (
-            isinstance(value, list)
-            or isinstance(value, tuple)
-            or isinstance(value, set)
-        ):
-            counter = list_tuple_set_mode(value, s_element, counter)
-        elif isinstance(value, dict):
-            counter = dict_mode(value, s_element, counter)
+        counter = check_element(key, s_element, counter)
+        counter = check_element(value, s_element, counter)
     return counter
 
 

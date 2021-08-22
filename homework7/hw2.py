@@ -22,20 +22,20 @@ from itertools import zip_longest
 
 
 def remove_all_vowel_before_sharp(string: str):
-    counter_sharp = 0
+    counter_sharp, i = 0, -1
     string = list(reversed(string))
-    for i in range(len(string)):
+    while i != len(string) - 1:
+        i += 1
+        if string[i] != "#" and counter_sharp != 0:
+            string[i : i + counter_sharp] = "#" * counter_sharp
+            i = i + counter_sharp - 1
         if string[i] == "#":
             counter_sharp += 1
-        else:
-            if counter_sharp != 0:
-                string[i : i + counter_sharp] = "/" * counter_sharp
-                counter_sharp = 0
-            else:
-                continue
+
     for el in reversed(string):
-        if el == "#" or el == "/":
+        if el == "#":
             string.remove(el)
+
     return string
 
 

@@ -19,48 +19,34 @@ Example:
      Return value should be "x wins!"
 
 """
+import itertools
 from typing import List
 
 
-# нелучшее решение, позже напишу покрасивее
-def tic_tac_toe_checker(board: List[List]) -> str:
-    answer_dict = {}
-    answer = {"x": "x wins!", "o": "o wins!", "-": "unfinished!", 0: "draw!"}
-    win_combination = [
-        [0, 1, 2],
-        [3, 4, 5],
-        [6, 7, 8],
-        [0, 3, 6],
-        [1, 4, 7],
-        [2, 5, 8],
-        [0, 4, 8],
-        [2, 4, 6],
-    ]
-    list_board = [i for element in board for i in element]
-    for el in ["x", "o", "-"]:
-        list_indexes = [
-            index for index in range(len(list_board)) if list_board[index] == el
-        ]
-        if el in ["x", "o"]:
-            if len(list_indexes) == 4:
-                if (
-                    list_indexes[:3] in win_combination
-                    or list_indexes[1:4] in win_combination
-                ):
-                    answer_dict[el] = "+"
-            if len(list_indexes) == 5:
-                if (
-                    list_indexes[:3] in win_combination
-                    or list_indexes[1:4] in win_combination
-                    or list_indexes[2:5] in win_combination
-                ):
-                    answer_dict[el] = "+"
-            if len(list_indexes) == 3 and list_indexes in win_combination:
-                answer_dict[el] = "+"
-        elif el == "-":
-            if not answer_dict and "-" in list_board:
-                answer_dict[el] = "+"
-            if "-" not in list_board:
-                answer_dict[0] = "+"
+def walking(seq):
+    counter, who = 1, None
+    for index in range(1, len(seq)):
+        if seq[index] == seq[index - 1]:
+            counter += 1
+            who = seq[index]
+        else:
+            counter = 1
+    return counter == 3, who
 
-    return [answer[key] for key in answer_dict if key in answer][0]
+
+def do_seq(board):
+    len_b = len(board)
+    seq_1 = [board[i][i] for i in range(len_b)]
+    seq_2 = [board[i][-(i + 1)] for i in range(len_b)]
+    seq_3 = [board[i][j] for j in range(len_b) for i in range(len_b)]
+    seq_4 = [board[j][i] for j in range(len_b) for i in range(len_b)]
+    return list(itertools.chain(seq_1, seq_2, seq_3, seq_4))
+
+
+def tic_tac_toe_checker(board: List[List]) -> str:
+    answer, seq = None, list(do_seq(board))
+    if True in walking(seq):
+        return f"{walking(seq)[1]} wins!"
+    if "-" in seq:
+        answer = "unfinished!"
+    return answer if answer else "draw!"

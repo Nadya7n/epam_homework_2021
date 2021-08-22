@@ -16,15 +16,16 @@ from typing import Callable, Optional
 
 
 def tokenizer_processing(line, tokenizer):
-    inner_counter = 0
+    print(tokenizer)
     if tokenizer is None:
-        inner_counter += 1
+        return 1
     else:
         if type(tokenizer) is list:
-            inner_counter = len([1 for element in line.split(*tokenizer)])
+            print([line.split(entry[0]) for entry in tokenizer])
+            print([len(line.split(entry[0])) for entry in tokenizer])
+            return sum([len(line.split(entry[0])) for entry in tokenizer])
         else:
-            inner_counter = len([1 for element in tokenizer(line)])
-    return inner_counter
+            return len(tokenizer(line))
 
 
 def universal_file_counter(

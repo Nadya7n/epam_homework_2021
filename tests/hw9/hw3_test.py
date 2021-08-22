@@ -1,4 +1,5 @@
 import tempfile
+from typing import Optional
 
 import pytest
 
@@ -7,12 +8,12 @@ from homework9.hw3 import universal_file_counter
 
 @pytest.fixture()
 def tmp_files(file_list, values) -> str:
-    temp_dir = tempfile.gettempdir()
-    for i in file_list:
-        temp_file = f"{temp_dir}/file{i}.txt"
-        with open(temp_file, "w") as fw:
-            fw.write(values[int(i)])
-    return temp_dir
+    with tempfile.TemporaryDirectory() as temp_dir:
+        for i in file_list:
+            temp_file = f"{temp_dir}/file{i}.txt"
+            with open(temp_file, "w") as fw:
+                fw.write(values[int(i)])
+        yield temp_dir
 
 
 @pytest.mark.parametrize(
@@ -24,8 +25,8 @@ def tmp_files(file_list, values) -> str:
         )
     ],
 )
-def test_counter_with_7_lines_without_tokenizer(tmp_files, file_list, values):
-    assert universal_file_counter(tmp_files, "txt", str.split) == 7
+def test_counter_with_4_lines_without_tokenizer(tmp_files, file_list, values):
+    assert universal_file_counter(tmp_files, "txt") == 4
 
 
 @pytest.mark.parametrize(
@@ -46,7 +47,7 @@ def test_counter_with_8_tokens_with_tokenizer(tmp_files, file_list, values):
     [
         (
             ["0", "1", "2"],
-            ["4.5.6\n10", "1\n8.2", "1"],
+            ["4.5.6 7\n10", "1\n8.2", "1"],
         )
     ],
 )

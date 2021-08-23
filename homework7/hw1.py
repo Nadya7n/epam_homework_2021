@@ -59,7 +59,7 @@ def check_flags(el, s_elem, counter):
     bool_s_el = cache(types(s_elem, bool))
     if (types(el, int) and int_s_el) or (types(el, bool) and bool_s_el):
         counter += 1
-    if not (int_s_el) and not (bool_s_el):
+    if not int_s_el and not bool_s_el:
         counter += 1
     return counter
 

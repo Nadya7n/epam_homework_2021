@@ -7,3 +7,5 @@ requests
 retry
 bs4
 lxml
+mock
+django

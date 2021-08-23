@@ -1,4 +1,11 @@
+black 
+isort
 pytest
 pytest-sugar
-black
-isort
+requests_mock
+requests
+retry
+bs4
+lxml
+mock
+django

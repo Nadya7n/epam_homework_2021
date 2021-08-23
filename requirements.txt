@@ -3,3 +3,9 @@ isort
 pytest
 pytest-sugar
 requests_mock
+requests
+retry
+bs4
+lxml
+mock
+django

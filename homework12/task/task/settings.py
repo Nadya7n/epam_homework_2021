@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "homework12.task.migration.apps.MigrationConfig",
+    "task.migration.apps.MigrationConfig",
 ]
 
 MIDDLEWARE = [

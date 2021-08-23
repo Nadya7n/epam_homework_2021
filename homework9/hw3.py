@@ -16,13 +16,10 @@ from typing import Callable, Optional
 
 
 def tokenizer_processing(line, tokenizer):
-    print(tokenizer)
     if tokenizer is None:
         return 1
     else:
         if type(tokenizer) is list:
-            print([line.split(entry[0]) for entry in tokenizer])
-            print([len(line.split(entry[0])) for entry in tokenizer])
             return sum([len(line.split(entry[0])) for entry in tokenizer])
         else:
             return len(tokenizer(line))

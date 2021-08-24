@@ -20,4 +20,4 @@ jobs:
           black --diff --check .
           isort --diff --check .
           py.test tests
-          homework12/task/manage.py test
+          python3 homework12/task/manage.py test migration

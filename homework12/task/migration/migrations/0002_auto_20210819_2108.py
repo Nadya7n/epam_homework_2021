@@ -15,12 +15,12 @@ def add_row(apps, schema_editor):
 
     Homework = apps.get_model("migration", "Homework")
     hw = Homework(
-        text="Calculate integral", deadline=datetime.timedelta(days=7), teacher_id=1
+        text="Calculate integral", deadline=datetime.timedelta(days=7), teacher=t
     )
     hw.save()
 
     HomeworkResult = apps.get_model("migration", "HomeworkResult")
-    hw_result = HomeworkResult(hw_id=1, solution="Done", student_id=1)
+    hw_result = HomeworkResult(hw=hw, solution="Done", student=st)
     hw_result.save()
 
 

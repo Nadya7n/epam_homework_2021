@@ -19,4 +19,5 @@ jobs:
           ls -la
           black --diff --check .
           isort --diff --check .
-          py.test --doctest-modules
+          py.test tests
+          python3 homework12/task/manage.py test migration
